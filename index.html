@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fauzan's Weather API</title>
+    <link rel="stylesheet"  href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body id="body">
+    <h1 class="heading">Welcome to Fauzan's Weather APP</h1>
+    <div class="cover">
+        <div class="searchTask">
+        <input type="text" placeholder="Enter your City" id="searchBar">
+        <button onclick="Search()" type="submit"><img style="width:90%; height: 90%;" src="https://img.icons8.com/ios-filled/50/000000/search--v3.png"/></button>
+        </div>
+        <div class="citye">
+            <img src="https://openweathermap.org/img/wn/04n.png" class="icon">
+        <h1 id="cityName">
+            City - <span id="country">NA</span>
+        </h1>
+        </div>
+        <h1 id="temp"><span id="temper">--</span>&#xb0;C</h1>
+        <div class="other">
+            <h3 id="temp2"><span id="weather">--</span></h3>
+            <h3 id="temp2">Precipiation :<span id="preci">--</span>%</h3>
+            <h3 id="temp2">Wind :<span id="windSpeed">--</span> km/h</h3>
+            <h3 id="temp2">Humidity :<span id="humi">--</span>%</h3>
+            </div>
+    </div>
+</body>
+<script>
+        const FetchWeather=async()=>{
+            let city=document.getElementById('searchBar').value;
+            document.getElementById('searchBar').value=" ";        let res=await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=d5730160f47a26a3334e0fe3f2b159b1`);
+console.log(res);
+document.getElementById('cityName').innerText=res.data.name;
+document.getElementById('temper').innerText=res.data.main.temp;
+document.getElementById('humi').innerText=res.data.main.humidity;
+document.getElementById('windSpeed').innerText=res.data.wind.speed;
+document.getElementById('weather').innerText=res.data.weather[0].description;
+let icons = res.data.weather[0].icon;
+document.getElementsByClassName('icon').src =
+      `https://openweathermap.org/img/wn/10d.png`;
+document.getElementById('country').innerText=res.data.sys.country;
+console.log(res.data.sys.country);
+};
+function Search(){   
+    let city=document.getElementById('searchBar').value;
+    FetchWeather();
+    console.log(city);
+}
+</script>
+</html>
